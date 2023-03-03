@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
 
-export const StyledContainer = styled.div`
-  width: 1136px;
-  border: 1px solid black;
+export const StyledMainContainer = styled.div`
+  max-width: 1136px;
+  width: 100%;
   margin: 0 auto;
 `;
