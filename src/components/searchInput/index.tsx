@@ -24,6 +24,7 @@ export const StyledButtonHeader = styled.button`
   background: transparent;
   border: none;
   outline: none;
+  cursor: pointer;
 `;
 
 const SearchInput = () => {
