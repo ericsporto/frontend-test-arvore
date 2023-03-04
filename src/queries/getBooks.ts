@@ -11,6 +11,6 @@ async function getBooks(ctx: QueryFunctionContext) {
 
 export default function useFetchBooks(search: string | null) {
   return useQuery(['books', search], getBooks, {
-    keepPreviousData: true,
+    refetchOnWindowFocus: false,
   });
 }

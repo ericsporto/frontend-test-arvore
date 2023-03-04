@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import BookField from './components/bookField';
 import Footer from './components/footer';
 import Header from './components/header';
@@ -8,17 +8,17 @@ import Spinner from './components/spinner';
 import FilterField from './components/filterField';
 import BookFilteredField from './components/bookFilteredField';
 import useFetchBooksFiltered from './queries/getBooksFiltered';
-import { useInfiniteQuery, useQueryClient } from 'react-query';
-import { BooksModel, Item } from './interfaces/books';
-import api from './services/api';
+import { useQueryClient } from 'react-query';
+import { Item } from './interfaces/books';
 
 function App() {
   const [text, setText] = useState('');
   const [sendSearch, setSendSearch] = useState('');
   const [hasSearch, setHasSearch] = useState(false);
-  const [download, setDownload] = useState('epub');
+  const [lastIndex, setLastIndex] = useState(0);
   const queryClient = useQueryClient();
-
+  const [newData, setNewData] = useState<Item[]>([]);
+  const loader = useRef(null);
 
   const { data: adventureBooks, isLoading: adventureLoading } =
     useFetchBooks('Aventura');
@@ -27,13 +27,38 @@ function App() {
     useFetchBooks('Destaques');
   const { data: childrenBooks, isLoading: childrenLoading } =
     useFetchBooks('Infantil');
-
-  const {data: booksFiltered} = useFetchBooksFiltered(sendSearch, 0)
+  const { data: booksFiltered, isLoading } = useFetchBooksFiltered(
+    sendSearch,
+    lastIndex
+  );
 
   const handleSearch = async () => {
     await queryClient.invalidateQueries(['filtered']);
     setSendSearch(text);
   };
+
+  const handleObserver = useCallback((entries: any) => {
+    const target = entries[0];
+    if (target.isIntersecting) {
+      setLastIndex((prev) => prev + 5);
+    }
+  }, []);
+
+  useEffect(() => {
+    const option = {
+      root: null,
+      rootMargin: '20px',
+      threshold: 0,
+    };
+    const observer = new IntersectionObserver(handleObserver, option);
+    if (loader.current) observer.observe(loader.current);
+  }, [handleObserver]);
+
+  useEffect(() => {
+    if (booksFiltered?.items) {
+      setNewData((prev) => [...prev, ...booksFiltered?.items]);
+    }
+  }, [booksFiltered]);
 
   return (
     <>
@@ -96,13 +121,14 @@ function App() {
               tag="h1"
               fontSize="md"
               fontWeight={600}
-              data={booksFiltered}
+              data={newData}
             />
           </div>
         </StyledMainContainer>
       )}
+      {isLoading && <Spinner />}
 
-      <div style={{ maxWidth: '1136px', margin: ' 0 auto' }}>
+      <div ref={loader} style={{ maxWidth: '1136px', margin: ' 0 auto' }}>
         <Footer />
       </div>
     </>

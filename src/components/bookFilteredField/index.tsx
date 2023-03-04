@@ -1,4 +1,4 @@
-import { BooksModel } from '../../interfaces/books';
+import { BooksModel, Item } from '../../interfaces/books';
 import { StyledText } from '../../styles/typography';
 import NoImage from '../../../public/img/no-book-image.png';
 import styled from 'styled-components';
@@ -11,7 +11,7 @@ interface BookFieldProps {
   tag: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
   fontSize: '2xl' | 'lg' | 'md' | 'sm' | 'xs';
   fontWeight: 700 | 600 | 500 | 400;
-  data?: BooksModel;
+  data?: Item[];
   isLoading?: boolean;
 }
 export const StyledBookContainerFiltered = styled.div`
@@ -53,7 +53,7 @@ const BookFilteredField: React.FC<BookFieldProps> = ({
           </StyledText>
         </div>
         <BookCardContainerFiltered>
-          {data?.items.map((item, index) => (
+          {data?.map((item, index) => (
             <div key={index} style={{ display: 'column' }}>
               <BookCardFiltered
                 url={
