@@ -1,53 +1,88 @@
+import { useState } from 'react';
 import BookField from './components/bookField';
 import Footer from './components/footer';
 import Header from './components/header';
 import useFetchBooks from './queries/getBooks';
 import { StyledMainContainer } from './styles/mainContainer';
+import Spinner from './components/spinner';
 
 function App() {
-  const { data: adventureBooks } = useFetchBooks('Aventura');
-  const { data: actionBooks } = useFetchBooks('Ação');
-  const { data: highlightsBooks } = useFetchBooks('Destaques');
-  const { data: childrenBooks } = useFetchBooks('Infantil');
+  const [text, setText] = useState('');
+  const [sendSearch, setSendSearch] = useState('Query');
+  const [hasSearch, setHasSearch] = useState(false);
+
+  const { data: adventureBooks, isLoading: adventureLoading } = useFetchBooks('Aventura');
+  const { data: actionBooks, isLoading: actionLoading } = useFetchBooks('Ação');
+  const { data: highlightsBooks, isLoading: highlightsLoading } = useFetchBooks('Destaques');
+  const { data: childrenBooks, isLoading: childrenLoading } = useFetchBooks('Infantil');
+
+  const { data: filteredBooks, isLoading } = useFetchBooks(sendSearch);
+
+  const handleSearch = () => {
+    setSendSearch(text);
+  };
 
   return (
     <>
-      <Header />
-      <StyledMainContainer>
-        <BookField
-          title="Aventura"
-          tag="h1"
-          fontSize="md"
-          fontWeight={600}
-          data={adventureBooks}
-        />
-        <BookField
-          title="Ação"
-          tag="h1"
-          fontSize="md"
-          fontWeight={600}
-          data={actionBooks}
-        />
-        <div style={{ color: '#A977D8', backgroundColor: '#DAF6F3' }}>
+      <Header
+        setText={setText}
+        setHasSearch={setHasSearch}
+        handleSearch={handleSearch}
+      />
+      {!hasSearch && (
+        <StyledMainContainer>
           <BookField
-            title="Destaques"
+            title="Aventura"
             tag="h1"
-            fontSize="2xl"
+            fontSize="md"
             fontWeight={600}
-            data={highlightsBooks}
+            data={adventureBooks}
+            isLoading={adventureLoading}
           />
-        </div>
-        <BookField
-          title="Infantil"
-          tag="h1"
-          fontSize="md"
-          fontWeight={600}
-          data={childrenBooks}
-        />
-        <div style={{ maxWidth: '1136px', margin: ' 0 auto' }}>
-          <Footer />
-        </div>
-      </StyledMainContainer>
+          <BookField
+            title="Ação"
+            tag="h1"
+            fontSize="md"
+            fontWeight={600}
+            data={actionBooks}
+            isLoading={actionLoading}
+          />
+          <div style={{ color: '#A977D8', backgroundColor: '#DAF6F3' }}>
+            <BookField
+              title="Destaques"
+              tag="h1"
+              fontSize="2xl"
+              fontWeight={600}
+              data={highlightsBooks}
+              isLoading={highlightsLoading}
+            />
+          </div>
+          <BookField
+            title="Infantil"
+            tag="h1"
+            fontSize="md"
+            fontWeight={600}
+            data={childrenBooks}
+            isLoading={childrenLoading}
+          />
+        </StyledMainContainer>
+      )}
+
+      {hasSearch && (
+        <StyledMainContainer>
+           <BookField
+            title="Infantil"
+            tag="h1"
+            fontSize="md"
+            fontWeight={600}
+            data={filteredBooks}
+          />
+        </StyledMainContainer>
+      )}
+
+      <div style={{ maxWidth: '1136px', margin: ' 0 auto' }}>
+        <Footer />
+      </div>
     </>
   );
 }

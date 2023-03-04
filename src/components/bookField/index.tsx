@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import Next from '../../../public/img/next-arrow.svg';
 import Prev from '../../../public/img/prev-arrow.png';
 import { useRef } from 'react';
+import Spinner from '../spinner';
 
 interface BookFieldProps {
   title: string;
@@ -14,6 +15,7 @@ interface BookFieldProps {
   fontSize: '2xl' | 'lg' | 'md' | 'sm' | 'xs';
   fontWeight: 700 | 600 | 500 | 400;
   data?: BooksModel;
+  isLoading?: boolean;
 }
 export const BookCardContainer = styled.div`
   width: 100%;
@@ -64,6 +66,7 @@ const BookField: React.FC<BookFieldProps> = ({
   fontSize,
   fontWeight,
   data,
+  isLoading
 }) => {
   const control = useRef<HTMLDivElement>(null);
 
@@ -105,6 +108,7 @@ const BookField: React.FC<BookFieldProps> = ({
         <BookNextAction onClick={handleRightClick}>
           <img src={Next} alt="next-arrow" />
         </BookNextAction>
+        {isLoading && <Spinner/>}
       </div>
     </StyledBookContainer>
   );

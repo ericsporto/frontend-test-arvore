@@ -1,6 +1,11 @@
 import styled from 'styled-components';
 import Lupa from '../../../public/img/lupa.svg';
-import { StyledText } from '../../styles/typography';
+
+interface SearchInputProps {
+  setText: (text: string) => void;
+  setHasSearch: (hasSearch: boolean) => void;
+  handleSearch: () => void;
+}
 
 export const StyledInputDiv = styled.div`
   display: flex;
@@ -27,12 +32,29 @@ export const StyledButtonHeader = styled.button`
   cursor: pointer;
 `;
 
-const SearchInput = () => {
+const SearchInput: React.FC<SearchInputProps> = ({
+  setText,
+  setHasSearch,
+  handleSearch,
+}) => {
   return (
     <StyledInputDiv>
-      <StyledInputHeader placeholder="Search" />
-      <StyledButtonHeader onClick={() => {}}>
-        <img src={Lupa} alt="lupa" width="16px" height="16px" style={{marginTop: '6px'}} />
+      <StyledInputHeader
+        placeholder="Search"
+        onChange={(e) => setText(e.target.value)}
+      />
+      <StyledButtonHeader
+        onClick={async () => {
+          handleSearch(), setHasSearch(true);
+        }}
+      >
+        <img
+          src={Lupa}
+          alt="lupa"
+          width="16px"
+          height="16px"
+          style={{ marginTop: '6px' }}
+        />
       </StyledButtonHeader>
     </StyledInputDiv>
   );
