@@ -14,13 +14,6 @@ export const Card = styled.div`
 
 `;
 
-export const BookCardContainer = styled.div`
-  width: 100%;
-  display: flex;
-  margin-top: 40px;
-
-`;
-
 const BookCard: React.FC<BookCardProps> = ({ url }) => {
   return (
     <Card>
@@ -29,6 +22,6 @@ const BookCard: React.FC<BookCardProps> = ({ url }) => {
   );
 };
 
-BookCard.displayName = 'Book Card';
+BookCard.displayName = 'BookCard';
 
 export default BookCard;

@@ -1,24 +1,37 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import BookField from './components/bookField';
 import Footer from './components/footer';
 import Header from './components/header';
 import useFetchBooks from './queries/getBooks';
 import { StyledMainContainer } from './styles/mainContainer';
 import Spinner from './components/spinner';
+import FilterField from './components/filterField';
+import BookFilteredField from './components/bookFilteredField';
+import useFetchBooksFiltered from './queries/getBooksFiltered';
+import { useInfiniteQuery, useQueryClient } from 'react-query';
+import { BooksModel, Item } from './interfaces/books';
+import api from './services/api';
 
 function App() {
   const [text, setText] = useState('');
-  const [sendSearch, setSendSearch] = useState('Query');
+  const [sendSearch, setSendSearch] = useState('');
   const [hasSearch, setHasSearch] = useState(false);
+  const [download, setDownload] = useState('epub');
+  const queryClient = useQueryClient();
 
-  const { data: adventureBooks, isLoading: adventureLoading } = useFetchBooks('Aventura');
-  const { data: actionBooks, isLoading: actionLoading } = useFetchBooks('Ação');
-  const { data: highlightsBooks, isLoading: highlightsLoading } = useFetchBooks('Destaques');
-  const { data: childrenBooks, isLoading: childrenLoading } = useFetchBooks('Infantil');
 
-  const { data: filteredBooks, isLoading } = useFetchBooks(sendSearch);
+  const { data: adventureBooks, isLoading: adventureLoading } =
+    useFetchBooks('Aventura');
+  const { data: actionBooks, isLoading: actionLoading } = useFetchBooks('Acao');
+  const { data: highlightsBooks, isLoading: highlightsLoading } =
+    useFetchBooks('Destaques');
+  const { data: childrenBooks, isLoading: childrenLoading } =
+    useFetchBooks('Infantil');
 
-  const handleSearch = () => {
+  const {data: booksFiltered} = useFetchBooksFiltered(sendSearch, 0)
+
+  const handleSearch = async () => {
+    await queryClient.invalidateQueries(['filtered']);
     setSendSearch(text);
   };
 
@@ -70,13 +83,22 @@ function App() {
 
       {hasSearch && (
         <StyledMainContainer>
-           <BookField
-            title="Infantil"
-            tag="h1"
-            fontSize="md"
-            fontWeight={600}
-            data={filteredBooks}
-          />
+          <div
+            style={{
+              maxWidth: '1136px',
+              margin: ' 0 auto',
+              display: 'flex',
+            }}
+          >
+            <FilterField />
+            <BookFilteredField
+              title={sendSearch}
+              tag="h1"
+              fontSize="md"
+              fontWeight={600}
+              data={booksFiltered}
+            />
+          </div>
         </StyledMainContainer>
       )}
 

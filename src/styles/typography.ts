@@ -17,6 +17,11 @@ export const StyledText = styled(BaseTitle)`
           font-size: 22px;
           line-height: 22px;
         `;
+      case 'l':
+        return css`
+          font-size: 18px;
+          line-height: 18px;
+        `;
       case 'md':
         return css`
           font-size: 16px;
@@ -31,6 +36,11 @@ export const StyledText = styled(BaseTitle)`
         return css`
           font-size: 12.8px;
           line-height: 16px;
+        `;
+      case 'x':
+        return css`
+          font-size: 10px;
+          line-height: 10px;
         `;
     }
   }}

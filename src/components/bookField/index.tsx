@@ -1,5 +1,4 @@
 import { BooksModel } from '../../interfaces/books';
-import { StyledBookContainer } from '../../styles/bookContainer';
 import { StyledText } from '../../styles/typography';
 import BookCard from '../bookCard';
 import NoImage from '../../../public/img/no-book-image.png';
@@ -17,6 +16,14 @@ interface BookFieldProps {
   data?: BooksModel;
   isLoading?: boolean;
 }
+
+export const StyledBookContainer = styled.div`
+  width: 100%;
+  height: 426px;
+  margin-top:20px;
+  position:relative;
+`;
+
 export const BookCardContainer = styled.div`
   width: 100%;
   display: flex;
@@ -114,5 +121,5 @@ const BookField: React.FC<BookFieldProps> = ({
   );
 };
 
-BookField.displayName = 'Header';
+BookField.displayName = 'BookField';
 export default BookField;

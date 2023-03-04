@@ -2,7 +2,7 @@ import { QueryFunctionContext, useQuery } from 'react-query';
 import api from '../services/api';
 import { BooksModel } from '../interfaces/books';
 
-async function getUsers(ctx: QueryFunctionContext) {
+async function getBooks(ctx: QueryFunctionContext) {
   const [, search] = ctx.queryKey;
   const { data } = await api.get<BooksModel>(
     `/volumes?q=${search}&startIndex=0&maxResults=40`);
@@ -10,7 +10,7 @@ async function getUsers(ctx: QueryFunctionContext) {
 }
 
 export default function useFetchBooks(search: string | null) {
-  return useQuery(['books', search], getUsers, {
+  return useQuery(['books', search], getBooks, {
     keepPreviousData: true,
   });
 }
