@@ -5,7 +5,7 @@ import { BooksModel } from '../interfaces/books';
 async function getUsers(ctx: QueryFunctionContext) {
   const [, search] = ctx.queryKey;
   const { data } = await api.get<BooksModel>(
-    `/volumes?q=${search}&startIndex=0&maxResults=10`,
+    `/volumes?q=${search}&startIndex=0&maxResults=40`,
     {
       params: {
         search: search ? search : "Query",

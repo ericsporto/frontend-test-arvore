@@ -11,6 +11,14 @@ export const Card = styled.div`
   box-shadow: 0px 8px 10px 1px rgba(5, 59, 75, 0.06);
   border-radius: 8px 16px 16px 8px;
   overflow: hidden;
+
+`;
+
+export const BookCardContainer = styled.div`
+  width: 100%;
+  display: flex;
+  margin-top: 40px;
+
 `;
 
 const BookCard: React.FC<BookCardProps> = ({ url }) => {

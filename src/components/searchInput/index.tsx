@@ -32,7 +32,7 @@ const SearchInput = () => {
     <StyledInputDiv>
       <StyledInputHeader placeholder="Search" />
       <StyledButtonHeader onClick={() => {}}>
-        <img src={Lupa} alt="lupa" width="16px" height="16px" />
+        <img src={Lupa} alt="lupa" width="16px" height="16px" style={{marginTop: '6px'}} />
       </StyledButtonHeader>
     </StyledInputDiv>
   );

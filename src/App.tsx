@@ -28,6 +28,7 @@ function App() {
           fontWeight={600}
           data={actionBooks}
         />
+        <div style={{ color: '#A977D8', backgroundColor: '#DAF6F3' }}>
           <BookField
             title="Destaques"
             tag="h1"
@@ -35,6 +36,7 @@ function App() {
             fontWeight={600}
             data={highlightsBooks}
           />
+        </div>
         <BookField
           title="Infantil"
           tag="h1"
@@ -42,7 +44,9 @@ function App() {
           fontWeight={600}
           data={childrenBooks}
         />
-        <Footer />
+        <div style={{ maxWidth: '1136px', margin: ' 0 auto' }}>
+          <Footer />
+        </div>
       </StyledMainContainer>
     </>
   );
