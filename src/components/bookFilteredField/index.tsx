@@ -1,6 +1,7 @@
 import { Item } from '../../interfaces/books';
 import { StyledText } from '../../styles/typography';
 import Overlay from '../../../public/img/not_available.png';
+import NoImage from '../../../public/img/book-sem-capa.jpg';
 import FilterIcon from '../../../public/img/filter-icon.svg';
 import styled from 'styled-components';
 import Spinner from '../spinner';
@@ -150,7 +151,7 @@ const BookFilteredField: React.FC<BookFieldProps> = ({
           {data?.map((item, index) => (
             <div key={index} style={{ display: 'column' }}>
               <BookCardFiltered
-                url={item.volumeInfo?.imageLinks?.thumbnail}
+                url={item.volumeInfo?.imageLinks?.thumbnail ? item.volumeInfo?.imageLinks?.thumbnail : NoImage }
                 image={
                   item.saleInfo.saleability === 'NOT_FOR_SALE'
                     ? Overlay
