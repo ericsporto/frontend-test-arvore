@@ -1,11 +1,4 @@
-import React, {
-  useRef,
-  useEffect,
-  useCallback,
-  Dispatch,
-  SetStateAction,
-} from 'react';
-import { useSpring } from 'react-spring';
+import React, { Dispatch, SetStateAction } from 'react';
 import styled from 'styled-components';
 import { MdClose } from 'react-icons/md';
 import MobileFilterField from '../filterField/MobileFilterField';
@@ -80,20 +73,6 @@ const FilterModal: React.FC<FilterModalProps> = ({
   setType,
   setType1,
 }) => {
-  const keyPress = useCallback(
-    (e: any) => {
-      if (e.key === 'Escape' && showModal) {
-        setShowModal(false);
-      }
-    },
-    [setShowModal, showModal]
-  );
-
-  useEffect(() => {
-    document.addEventListener('keydown', keyPress);
-    return () => document.removeEventListener('keydown', keyPress);
-  }, [keyPress]);
-
   return (
     <>
       {showModal ? (

@@ -2,6 +2,7 @@ import { BooksModel } from '../../interfaces/books';
 import { StyledText } from '../../styles/typography';
 import BookCard from '../bookCard';
 import NoImage from '../../../public/img/no-book-image.png';
+import Overlay from '../../../public/img/not_available.png';
 import styled from 'styled-components';
 import Next from '../../../public/img/next-arrow.svg';
 import Prev from '../../../public/img/prev-arrow.png';
@@ -12,7 +13,7 @@ import { BookBox } from '../../styles/bookContainer';
 interface BookFieldProps {
   title: string;
   tag: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
-  fontSize: '2xl' | 'lg' | 'md' | 'sm' | 'xs';
+  fontSize?: '2xl' | 'lg' | 'md' | 'sm' | 'xs';
   fontWeight: 700 | 600 | 500 | 400;
   data?: BooksModel;
   isLoading?: boolean;
@@ -144,6 +145,7 @@ const BookField: React.FC<BookFieldProps> = ({
                   : NoImage
               }
               key={index}
+              image={item.saleInfo.saleability === "NOT_FOR_SALE" ? Overlay : item.volumeInfo?.imageLinks?.thumbnail}
             />
           ))}
         </BookCardContainer>

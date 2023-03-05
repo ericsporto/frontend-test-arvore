@@ -3,7 +3,7 @@ export interface BaseTitleProps {
   className?: string;
   tag: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
   fontWeight: 700 | 600 | 500 | 400;
-  fontSize: '2xl' | 'lg' | 'l' | 'md' | 'sm' | 'xs' | 'x';
+  fontSize?: '2xl' | 'lg' | 'l' | 'md' | 'sm' | 'xs' | 'x';
 }
 
 const BaseTitle: React.FC<BaseTitleProps> = ({ children, className, tag }) => {

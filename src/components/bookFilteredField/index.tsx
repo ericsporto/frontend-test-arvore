@@ -1,10 +1,12 @@
 import { Item } from '../../interfaces/books';
 import { StyledText } from '../../styles/typography';
 import NoImage from '../../../public/img/no-book-image.png';
+import Overlay from '../../../public/img/not_available.png';
 import FilterIcon from '../../../public/img/filter-icon.svg';
 import styled from 'styled-components';
 import Spinner from '../spinner';
 import BookCardFiltered from '../bookCard/BookCardFiltered';
+import { useState } from 'react';
 interface BookFieldProps {
   title: string;
   tag: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
@@ -116,6 +118,8 @@ const BookFilteredField: React.FC<BookFieldProps> = ({
   isLoading,
   setShowModal,
 }) => {
+  const [showClearButton, setShowClearButton] = useState(false);
+
   return (
     <StyledBookContainerFiltered>
       <div style={{ maxWidth: '744px', margin: ' 0 auto' }}>
@@ -125,15 +129,23 @@ const BookFilteredField: React.FC<BookFieldProps> = ({
           </StyledText>
         </BookResults>
         <MobileButtonBox>
-          <MobileFilterButton onClick={() => setShowModal(true)}>
+          <MobileFilterButton
+            onClick={() => {
+              setShowModal(true), setShowClearButton(true);
+            }}
+          >
             <img src={FilterIcon} alt="filter-icons" />
             FILTRAR
           </MobileFilterButton>
         </MobileButtonBox>
         <MobileClearButtonBox>
-          <StyledClearFilterMobileButton onClick={() => {}}>
-            LIMPAR FILTRO
-          </StyledClearFilterMobileButton>
+          {showClearButton && (
+            <StyledClearFilterMobileButton
+              onClick={() => setShowClearButton(false)}
+            >
+              LIMPAR FILTRO
+            </StyledClearFilterMobileButton>
+          )}
         </MobileClearButtonBox>
         <BookCardContainerFiltered>
           {data?.map((item, index) => (
@@ -143,6 +155,11 @@ const BookFilteredField: React.FC<BookFieldProps> = ({
                   item.volumeInfo?.imageLinks?.thumbnail
                     ? item.volumeInfo?.imageLinks?.thumbnail
                     : NoImage
+                }
+                image={
+                  item.saleInfo.saleability === 'NOT_FOR_SALE'
+                    ? Overlay
+                    : item.volumeInfo?.imageLinks?.thumbnail
                 }
               />
               <BookCardInfoFiltered>

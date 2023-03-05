@@ -101,7 +101,9 @@ function App() {
         item.accessInfo.pdf.isAvailable === type1 ||
         item.accessInfo.pdf.isAvailable === type ||
         (item.accessInfo.pdf.isAvailable === type &&
-          item.accessInfo.pdf.isAvailable === type1)
+          item.accessInfo.pdf.isAvailable === type1) ||
+          item.saleInfo.saleability === available ||
+          item.saleInfo.saleability === available1
       );
     });
   }, [
@@ -157,7 +159,7 @@ function App() {
             <BookField
               title="Destaques"
               tag="h1"
-              fontSize="2xl"
+              fontSize="lg"
               fontWeight={600}
               data={highlightsBooks}
               isLoading={highlightsLoading}
