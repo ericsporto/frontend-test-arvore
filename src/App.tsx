@@ -45,6 +45,8 @@ function App() {
 
   const handleSearch = async () => {
     await queryClient.invalidateQueries(['filtered']);
+    setLastIndex(0)
+    setNewData([])
     setSendSearch(text);
   };
 

@@ -27,6 +27,23 @@ export const StyledFilterCheckbox = styled.input`
   width: 15px;
   height: 15px;
 `;
+export const StyledClearFilterButton = styled.button`
+  width: 212px;
+  height: 47px;
+  color: #ffffff;
+  background: #adb7bf;
+  border: 1px solid rgba(64, 106, 118, 0.2);
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 16px;
+  cursor: pointer;
+  margin-top: 30px;
+  transition: all 400ms ease-in-out;
+  &:hover {
+    background: #788188;
+  }
+`;
 
 const FilterField: React.FC<FilterFieldProps> = ({
   setMoney,
@@ -47,68 +64,55 @@ const FilterField: React.FC<FilterFieldProps> = ({
   const [checkedType, setCheckedType] = useState(false);
   const [checkedType1, setCheckedType1] = useState(false);
 
-  const handleChecked = () => {
-    if (!checkedMoney) {
-      setCheckedMoney(true);
+  const handleChecked = (state: any, setState: (state: any) => void) => {
+    if (!state) {
+      setState(true);
     } else {
-      setCheckedMoney(false);
+      setState(false);
     }
   };
-  const handleChecked1 = () => {
-    if (!checkedMoney1) {
-      setCheckedMoney1(true);
-    } else {
-      setCheckedMoney1(false);
-    }
+ 
+
+  const clearFilters = () => {
+    setCheckedMoney(false);
+    setCheckedMoney1(false);
+    setCheckedMoney2(false);
+    setCheckedMoney3(false);
+    setCheckedAvailable(false);
+    setCheckedAvailable1(false);
+    setCheckedType(false);
+    setCheckedType1(false);
+    setMoney(0);
+    setMoney1(0);
+    setMoney2(0);
+    setMoney3(0);
+    setAvailable('');
+    setAvailable1('');
+    setType(false);
+    setType1(false);
   };
-  const handleChecked2 = () => {
-    if (!checkedMoney2) {
-      setCheckedMoney2(true);
-    } else {
-      setCheckedMoney2(false);
-    }
-  };
-  const handleChecked3 = () => {
-    if (!checkedMoney3) {
-      setCheckedMoney3(true);
-    } else {
-      setCheckedMoney3(false);
-    }
-  };
-  const handleChecked4 = () => {
-    if (!checkedAvailable) {
-      setCheckedAvailable(true);
-    } else {
-      setCheckedAvailable(false);
-    }
-  };
-  const handleChecked5 = () => {
-    if (!checkedAvailable1) {
-      setCheckedAvailable1(true);
-    } else {
-      setCheckedAvailable1(false);
-    }
-  };
-  const handleChecked6 = () => {
-    if (!checkedType) {
-      setCheckedType(true);
-    } else {
-      setCheckedType(false);
-    }
-  };
-  const handleChecked7 = () => {
-    if (!checkedType1) {
-      setCheckedType1(true);
-    } else {
-      setCheckedType1(false);
-    }
-  };
+
+  const someoneVerify =
+    !checkedMoney &&
+    !checkedMoney1 &&
+    !checkedMoney2 &&
+    !checkedMoney3 &&
+    !checkedAvailable &&
+    !checkedAvailable1 &&
+    !checkedType &&
+    !checkedType1;
 
   return (
     <StyledFilterContainer>
       <StyledText tag="h4" fontSize="l" fontWeight={600}>
         Filtrar
       </StyledText>
+
+      {!someoneVerify && (
+        <StyledClearFilterButton onClick={clearFilters}>
+          LIMPAR FILTRO X
+        </StyledClearFilterButton>
+      )}
 
       <div style={{ color: '#9EAEB7', marginTop: '32px' }}>
         <StyledText tag="h5" fontSize="sm" fontWeight={600}>
@@ -118,10 +122,10 @@ const FilterField: React.FC<FilterFieldProps> = ({
 
       <StyledFilterBox>
         <StyledFilterCheckbox
-          value={!checkedMoney ? 31.00 : 0}
+          value={!checkedMoney ? 31.0 : 0}
           type="checkbox"
           checked={checkedMoney}
-          onClick={handleChecked}
+          onClick={() => handleChecked(checkedMoney, setCheckedMoney)}
           onChange={(e) => setMoney(+e.target.value)}
         />
         <StyledText tag="h5" fontSize="sm" fontWeight={400}>
@@ -130,11 +134,13 @@ const FilterField: React.FC<FilterFieldProps> = ({
       </StyledFilterBox>
       <StyledFilterBox>
         <StyledFilterCheckbox
-          value={!checkedMoney1 ? 50.00 : 0}
+          value={!checkedMoney1 ? 50.0 : 0}
           type="checkbox"
           checked={checkedMoney1}
-          onClick={handleChecked1}
-          onChange={(e) => {setMoney1(+e.target.value), setMoney(31.00)}}
+          onClick={() => handleChecked(checkedMoney1, setCheckedMoney1)}
+          onChange={(e) => {
+            setMoney1(+e.target.value), setMoney(31.0);
+          }}
         />
         <StyledText tag="h5" fontSize="sm" fontWeight={400}>
           de R$31 até R$50
@@ -145,8 +151,10 @@ const FilterField: React.FC<FilterFieldProps> = ({
           value={!checkedMoney2 ? 100 : 0}
           type="checkbox"
           checked={checkedMoney2}
-          onClick={handleChecked2}
-          onChange={(e) => {setMoney1(51.00),setMoney2(+e.target.value)}}
+          onClick={() => handleChecked(checkedMoney2, setCheckedMoney2)}
+          onChange={(e) => {
+            setMoney1(51.0), setMoney2(+e.target.value);
+          }}
         />
         <StyledText tag="h5" fontSize="sm" fontWeight={400}>
           de R$51 até R$100
@@ -157,7 +165,7 @@ const FilterField: React.FC<FilterFieldProps> = ({
           value={!checkedMoney3 ? 100 : 0}
           type="checkbox"
           checked={checkedMoney3}
-          onClick={handleChecked3}
+          onClick={() => handleChecked(checkedMoney3, setCheckedMoney3)}
           onChange={(e) => setMoney3(+e.target.value)}
         />
         <StyledText tag="h5" fontSize="sm" fontWeight={400}>
@@ -172,10 +180,10 @@ const FilterField: React.FC<FilterFieldProps> = ({
       </div>
       <StyledFilterBox>
         <StyledFilterCheckbox
-        value={!checkedAvailable ? "FOR_SALE" : ''}
+          value={!checkedAvailable ? 'FOR_SALE' : ''}
           type="checkbox"
           checked={checkedAvailable}
-          onClick={handleChecked4}
+          onClick={() => handleChecked(checkedAvailable, setCheckedAvailable)}
           onChange={(e) => setAvailable(e.target.value)}
         />
         <StyledText tag="h5" fontSize="sm" fontWeight={400}>
@@ -184,10 +192,10 @@ const FilterField: React.FC<FilterFieldProps> = ({
       </StyledFilterBox>
       <StyledFilterBox>
         <StyledFilterCheckbox
-        value={!checkedAvailable1 ? "NOT_FOR_SALE" : ''}
+          value={!checkedAvailable1 ? 'NOT_FOR_SALE' : ''}
           type="checkbox"
           checked={checkedAvailable1}
-          onClick={handleChecked5}
+          onClick={() => handleChecked(checkedAvailable1, setCheckedAvailable1)}
           onChange={(e) => setAvailable1(e.target.value)}
         />
         <StyledText tag="h5" fontSize="sm" fontWeight={400}>
@@ -204,7 +212,7 @@ const FilterField: React.FC<FilterFieldProps> = ({
         <StyledFilterCheckbox
           type="checkbox"
           checked={checkedType}
-          onClick={handleChecked6}
+          onClick={() => handleChecked(checkedType, setCheckedType)}
           onChange={(e) => setType(e.target.checked)}
         />
         <StyledText tag="h5" fontSize="sm" fontWeight={400}>
@@ -215,7 +223,7 @@ const FilterField: React.FC<FilterFieldProps> = ({
         <StyledFilterCheckbox
           type="checkbox"
           checked={checkedType1}
-          onClick={handleChecked7}
+          onClick={() => handleChecked(checkedType1, setCheckedType1)}
           onChange={(e) => setType1(e.target.checked)}
         />
         <StyledText tag="h5" fontSize="sm" fontWeight={400}>
