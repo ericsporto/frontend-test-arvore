@@ -1,6 +1,5 @@
 import { Item } from '../../interfaces/books';
 import { StyledText } from '../../styles/typography';
-import NoImage from '../../../public/img/no-book-image.png';
 import Overlay from '../../../public/img/not_available.png';
 import FilterIcon from '../../../public/img/filter-icon.svg';
 import styled from 'styled-components';
@@ -151,11 +150,7 @@ const BookFilteredField: React.FC<BookFieldProps> = ({
           {data?.map((item, index) => (
             <div key={index} style={{ display: 'column' }}>
               <BookCardFiltered
-                url={
-                  item.volumeInfo?.imageLinks?.thumbnail
-                    ? item.volumeInfo?.imageLinks?.thumbnail
-                    : NoImage
-                }
+                url={item.volumeInfo?.imageLinks?.thumbnail}
                 image={
                   item.saleInfo.saleability === 'NOT_FOR_SALE'
                     ? Overlay

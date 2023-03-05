@@ -1,7 +1,6 @@
 import { BooksModel } from '../../interfaces/books';
 import { StyledText } from '../../styles/typography';
 import BookCard from '../bookCard';
-import NoImage from '../../../public/img/no-book-image.png';
 import Overlay from '../../../public/img/not_available.png';
 import styled from 'styled-components';
 import Next from '../../../public/img/next-arrow.svg';
@@ -139,13 +138,13 @@ const BookField: React.FC<BookFieldProps> = ({
         <BookCardContainer ref={control}>
           {data?.items.map((item, index) => (
             <BookCard
-              url={
-                item.volumeInfo?.imageLinks?.thumbnail
-                  ? item.volumeInfo?.imageLinks?.thumbnail
-                  : NoImage
-              }
+              url={item.volumeInfo?.imageLinks?.thumbnail}
               key={index}
-              image={item.saleInfo.saleability === "NOT_FOR_SALE" ? Overlay : item.volumeInfo?.imageLinks?.thumbnail}
+              image={
+                item.saleInfo.saleability === 'NOT_FOR_SALE'
+                  ? Overlay
+                  : item.volumeInfo?.imageLinks?.thumbnail
+              }
             />
           ))}
         </BookCardContainer>
