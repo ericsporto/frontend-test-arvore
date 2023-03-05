@@ -7,6 +7,7 @@ import Next from '../../../public/img/next-arrow.svg';
 import Prev from '../../../public/img/prev-arrow.png';
 import { useRef } from 'react';
 import Spinner from '../spinner';
+import { BookBox } from '../../styles/bookContainer';
 
 interface BookFieldProps {
   title: string;
@@ -20,8 +21,15 @@ interface BookFieldProps {
 export const StyledBookContainer = styled.div`
   width: 100%;
   height: 426px;
-  margin-top:20px;
-  position:relative;
+  margin-top: 20px;
+  position: relative;
+  @media (max-width: 1024px) {
+    height: 275px;
+  }
+  @media (max-width: 530px) {
+    height: 115px;
+    margin: 35px 0;
+  }
 `;
 
 export const BookCardContainer = styled.div`
@@ -32,6 +40,9 @@ export const BookCardContainer = styled.div`
   flex-flow: row nowrap;
   &::-webkit-scrollbar {
     -webkit-appearance: none;
+  }
+  @media (max-width: 1024px) {
+    margin-top: 0px;
   }
 `;
 
@@ -49,6 +60,9 @@ const BookPrevAction = styled.button`
   &:hover {
     opacity: 1;
   }
+  @media (max-width: 650px) {
+    display: none;
+  }
 `;
 
 const BookNextAction = styled.button`
@@ -65,6 +79,29 @@ const BookNextAction = styled.button`
   &:hover {
     opacity: 1;
   }
+  @media (max-width: 650px) {
+    display: none;
+  }
+`;
+
+const TitleBox = styled.div`
+  margin-top: 20px;
+  padding-top: 30px;
+
+  @media (max-width: 1024px) {
+    margin-top: 20px;
+    padding-top: 20px;
+    padding-bottom: 10px;
+  }
+  @media (max-width: 650px) {
+    margin-top: 15px;
+    padding-top: 15px;
+  }
+  @media (max-width: 530px) {
+    margin-top: 0px;
+    padding-top: 0px;
+    padding-bottom: 15px;
+  }
 `;
 
 const BookField: React.FC<BookFieldProps> = ({
@@ -73,7 +110,7 @@ const BookField: React.FC<BookFieldProps> = ({
   fontSize,
   fontWeight,
   data,
-  isLoading
+  isLoading,
 }) => {
   const control = useRef<HTMLDivElement>(null);
 
@@ -89,17 +126,15 @@ const BookField: React.FC<BookFieldProps> = ({
 
   return (
     <StyledBookContainer>
-      <div
-        style={{ maxWidth: '1136px', margin: ' 0 auto', position: 'relative' }}
-      >
+      <BookBox>
         <BookPrevAction onClick={handleLeftClick}>
           <img src={Prev} alt="next-arrow" />
         </BookPrevAction>
-        <div style={{ marginTop: '20px', paddingTop: '30px' }}>
+        <TitleBox>
           <StyledText tag={tag} fontSize={fontSize} fontWeight={fontWeight}>
             {title}
           </StyledText>
-        </div>
+        </TitleBox>
         <BookCardContainer ref={control}>
           {data?.items.map((item, index) => (
             <BookCard
@@ -115,8 +150,8 @@ const BookField: React.FC<BookFieldProps> = ({
         <BookNextAction onClick={handleRightClick}>
           <img src={Next} alt="next-arrow" />
         </BookNextAction>
-        {isLoading && <Spinner/>}
-      </div>
+        {isLoading && <Spinner />}
+      </BookBox>
     </StyledBookContainer>
   );
 };

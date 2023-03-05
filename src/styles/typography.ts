@@ -5,6 +5,7 @@ export const StyledText = styled(BaseTitle)`
   font-family: 'Inter', sans-serif;
   font-weight: ${({ fontWeight }) => fontWeight};
 
+
   ${({ fontSize }) => {
     switch (fontSize) {
       case '2xl':

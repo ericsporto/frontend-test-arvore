@@ -14,14 +14,11 @@ interface FilterFieldProps {
 }
 
 export const StyledFilterContainer = styled.div`
-  width: 40%;
-  margin-top: 70px;
-  @media (max-width: 1024px) {
-    width: 70%;
-  }
+  width: 100vw;
+  display: none;
   @media (max-width: 640px) {
-    width: 70%;
-    display: none;
+    display: flex;
+    flex-direction: column;
   }
 `;
 export const StyledFilterBox = styled.div`
@@ -29,6 +26,10 @@ export const StyledFilterBox = styled.div`
   margin-top: 22px;
   display: flex;
   gap: 10px;
+`;
+export const StyledBox = styled.div`
+  color: #9EAEB7;
+  margin-top: 32px;
 `;
 export const StyledFilterCheckbox = styled.input`
   width: 15px;
@@ -52,7 +53,7 @@ export const StyledClearFilterButton = styled.button`
   }
 `;
 
-const FilterField: React.FC<FilterFieldProps> = ({
+const MobileFilterField: React.FC<FilterFieldProps> = ({
   setMoney,
   setMoney1,
   setMoney2,
@@ -79,52 +80,17 @@ const FilterField: React.FC<FilterFieldProps> = ({
     }
   };
 
-  const clearFilters = () => {
-    setCheckedMoney(false);
-    setCheckedMoney1(false);
-    setCheckedMoney2(false);
-    setCheckedMoney3(false);
-    setCheckedAvailable(false);
-    setCheckedAvailable1(false);
-    setCheckedType(false);
-    setCheckedType1(false);
-    setMoney(0);
-    setMoney1(0);
-    setMoney2(0);
-    setMoney3(0);
-    setAvailable('');
-    setAvailable1('');
-    setType(false);
-    setType1(false);
-  };
-
-  const someoneVerify =
-    !checkedMoney &&
-    !checkedMoney1 &&
-    !checkedMoney2 &&
-    !checkedMoney3 &&
-    !checkedAvailable &&
-    !checkedAvailable1 &&
-    !checkedType &&
-    !checkedType1;
-
   return (
     <StyledFilterContainer>
       <StyledText tag="h4" fontSize="l" fontWeight={600}>
         Filtrar
       </StyledText>
 
-      {!someoneVerify && (
-        <StyledClearFilterButton onClick={clearFilters}>
-          LIMPAR FILTRO X
-        </StyledClearFilterButton>
-      )}
-
-      <div style={{ color: '#9EAEB7', marginTop: '32px' }}>
+      <StyledBox>
         <StyledText tag="h5" fontSize="sm" fontWeight={600}>
           Preço
         </StyledText>
-      </div>
+      </StyledBox>
 
       <StyledFilterBox>
         <StyledFilterCheckbox
@@ -179,11 +145,11 @@ const FilterField: React.FC<FilterFieldProps> = ({
         </StyledText>
       </StyledFilterBox>
 
-      <div style={{ color: '#9EAEB7', marginTop: '32px' }}>
+      <StyledBox>
         <StyledText tag="h5" fontSize="sm" fontWeight={600}>
           Disponibilidade para venda
         </StyledText>
-      </div>
+      </StyledBox>
       <StyledFilterBox>
         <StyledFilterCheckbox
           value={!checkedAvailable ? 'FOR_SALE' : ''}
@@ -209,11 +175,11 @@ const FilterField: React.FC<FilterFieldProps> = ({
         </StyledText>
       </StyledFilterBox>
 
-      <div style={{ color: '#9EAEB7', marginTop: '32px' }}>
+      <StyledBox>
         <StyledText tag="h5" fontSize="sm" fontWeight={600}>
           Formatos disponíveis
         </StyledText>
-      </div>
+      </StyledBox>
       <StyledFilterBox>
         <StyledFilterCheckbox
           type="checkbox"
@@ -240,5 +206,5 @@ const FilterField: React.FC<FilterFieldProps> = ({
   );
 };
 
-FilterField.displayName = 'FilterField';
-export default FilterField;
+MobileFilterField.displayName = 'MobileFilterField';
+export default MobileFilterField;

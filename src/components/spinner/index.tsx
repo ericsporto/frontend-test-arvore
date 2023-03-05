@@ -7,6 +7,12 @@ const StyledSpinner = styled.div`
   width: 120px;
   height: 120px;
   animation: spin 2s linear infinite;
+  @media (max-width: 530px) {
+    width: 60px;
+    height: 60px;
+    border: 8px solid #f3f3f3;
+    border-top: 8px solid #45d0c1;
+  }
 
   @keyframes spin {
     0% {

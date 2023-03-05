@@ -13,6 +13,11 @@ export const FooterContainer = styled.div`
   padding: 0 30px;
   border-top: 0.5px solid #d9d9d9;
   color: #b2b4b9;
+  @media (max-width: 530px) {
+    padding: 0 65px;
+    text-align: center;
+    height: 76px;
+  }
 `;
 export const FooterButton = styled.button`
   font-size: 16px;
@@ -26,6 +31,9 @@ export const FooterButton = styled.button`
   border: 1px solid #b2b4b9;
   border-radius: 10px;
   color: #b2b4b9;
+  @media (max-width: 530px) {
+    display:none
+  }
 `;
 
 const Footer = () => {

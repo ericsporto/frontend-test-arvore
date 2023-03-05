@@ -10,15 +10,20 @@ import BookFilteredField from './components/bookFilteredField';
 import useFetchBooksFiltered from './queries/getBooksFiltered';
 import { useQueryClient } from 'react-query';
 import { Item } from './interfaces/books';
+import { BookFilteredBox } from './styles/bookContainer';
+import { ColoredContainer } from './styles/coloredContainer';
+import { StyledText } from './styles/typography';
+import FilterModal from './components/mobileFilterModal';
 
 function App() {
   const [text, setText] = useState('');
   const [sendSearch, setSendSearch] = useState('');
   const [hasSearch, setHasSearch] = useState(false);
   const [lastIndex, setLastIndex] = useState(0);
-  const queryClient = useQueryClient();
   const [newData, setNewData] = useState<Item[]>([]);
+  const [showModal, setShowModal] = useState(false);
   const loader = useRef(null);
+  const queryClient = useQueryClient();
 
   //States Filters
   const [money, setMoney] = useState(0);
@@ -45,8 +50,8 @@ function App() {
 
   const handleSearch = async () => {
     await queryClient.invalidateQueries(['filtered']);
-    setLastIndex(0)
-    setNewData([])
+    setLastIndex(0);
+    setNewData([]);
     setSendSearch(text);
   };
 
@@ -113,6 +118,18 @@ function App() {
 
   return (
     <>
+      <FilterModal
+        showModal={showModal}
+        setShowModal={setShowModal}
+        setType={setType}
+        setType1={setType1}
+        setAvailable={setAvailable}
+        setAvailable1={setAvailable1}
+        setMoney={setMoney}
+        setMoney1={setMoney1}
+        setMoney2={setMoney2}
+        setMoney3={setMoney3}
+      />
       <Header
         setText={setText}
         setHasSearch={setHasSearch}
@@ -136,7 +153,7 @@ function App() {
             data={actionBooks}
             isLoading={actionLoading}
           />
-          <div style={{ color: '#A977D8', backgroundColor: '#DAF6F3' }}>
+          <ColoredContainer>
             <BookField
               title="Destaques"
               tag="h1"
@@ -145,7 +162,7 @@ function App() {
               data={highlightsBooks}
               isLoading={highlightsLoading}
             />
-          </div>
+          </ColoredContainer>
           <BookField
             title="Infantil"
             tag="h1"
@@ -159,13 +176,7 @@ function App() {
 
       {hasSearch && (
         <StyledMainContainer>
-          <div
-            style={{
-              maxWidth: '1136px',
-              margin: ' 0 auto',
-              display: 'flex',
-            }}
-          >
+          <BookFilteredBox>
             <FilterField
               setType={setType}
               setType1={setType1}
@@ -182,8 +193,9 @@ function App() {
               fontSize="md"
               fontWeight={600}
               data={filterBooks}
+              setShowModal={setShowModal}
             />
-          </div>
+          </BookFilteredBox>
         </StyledMainContainer>
       )}
       {isLoading && <Spinner />}
