@@ -1,11 +1,12 @@
 import { QueryFunctionContext, useQuery } from 'react-query';
 import api from '../services/api';
-import { BooksModel } from '../interfaces/books';
+import { BooksModel } from '../types/books';
 
 async function getBooks(ctx: QueryFunctionContext) {
   const [, search] = ctx.queryKey;
   const { data } = await api.get<BooksModel>(
-    `/volumes?q=${search}&startIndex=0&maxResults=40`);
+    `/volumes?q=${search}&startIndex=0&maxResults=40`
+  );
   return data;
 }
 

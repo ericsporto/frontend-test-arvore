@@ -28,7 +28,7 @@ const SpinnerContainer = styled.div`
   display: flex;
   width: 100%;
   height: 100%;
-  margin: 0 auto;
+  margin: 20px auto;
   justify-content: center;
 `;
 

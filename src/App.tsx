@@ -1,19 +1,13 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import BookField from './components/bookField';
 import Footer from './components/footer';
 import Header from './components/header';
-import useFetchBooks from './queries/getBooks';
-import { StyledMainContainer } from './styles/mainContainer';
 import Spinner from './components/spinner';
-import FilterField from './components/filterField';
-import BookFilteredField from './components/bookFilteredField';
 import useFetchBooksFiltered from './queries/getBooksFiltered';
 import { useQueryClient } from 'react-query';
-import { Item } from './interfaces/books';
-import { BookFilteredBox } from './styles/bookContainer';
-import { ColoredContainer } from './styles/coloredContainer';
-import { StyledText } from './styles/typography';
+import { Item } from './types/books';
 import FilterModal from './components/mobileFilterModal';
+import Home from './pages/Home';
+import SearchPage from './pages/SearchPage';
 
 function App() {
   const [text, setText] = useState('');
@@ -35,14 +29,6 @@ function App() {
   const [type, setType] = useState<boolean | null>(null);
   const [type1, setType1] = useState<boolean | null>(null);
 
-  //Fetch Datas
-  const { data: adventureBooks, isLoading: adventureLoading } =
-    useFetchBooks('Aventura');
-  const { data: actionBooks, isLoading: actionLoading } = useFetchBooks('Acao');
-  const { data: highlightsBooks, isLoading: highlightsLoading } =
-    useFetchBooks('Destaques');
-  const { data: childrenBooks, isLoading: childrenLoading } =
-    useFetchBooks('Infantil');
   const { data: booksFiltered, isLoading } = useFetchBooksFiltered(
     sendSearch,
     lastIndex
@@ -102,8 +88,8 @@ function App() {
         item.accessInfo.pdf.isAvailable === type ||
         (item.accessInfo.pdf.isAvailable === type &&
           item.accessInfo.pdf.isAvailable === type1) ||
-          item.saleInfo.saleability === available ||
-          item.saleInfo.saleability === available1
+        item.saleInfo.saleability === available ||
+        item.saleInfo.saleability === available1
       );
     });
   }, [
@@ -137,69 +123,24 @@ function App() {
         setHasSearch={setHasSearch}
         handleSearch={handleSearch}
       />
-      {!hasSearch && (
-        <StyledMainContainer>
-          <BookField
-            title="Aventura"
-            tag="h1"
-            fontSize="md"
-            fontWeight={600}
-            data={adventureBooks}
-            isLoading={adventureLoading}
-          />
-          <BookField
-            title="Ação"
-            tag="h1"
-            fontSize="md"
-            fontWeight={600}
-            data={actionBooks}
-            isLoading={actionLoading}
-          />
-          <ColoredContainer>
-            <BookField
-              title="Destaques"
-              tag="h1"
-              fontSize="lg"
-              fontWeight={600}
-              data={highlightsBooks}
-              isLoading={highlightsLoading}
-            />
-          </ColoredContainer>
-          <BookField
-            title="Infantil"
-            tag="h1"
-            fontSize="md"
-            fontWeight={600}
-            data={childrenBooks}
-            isLoading={childrenLoading}
-          />
-        </StyledMainContainer>
-      )}
+      {!hasSearch && <Home />}
 
       {hasSearch && (
-        <StyledMainContainer>
-          <BookFilteredBox>
-            <FilterField
-              setType={setType}
-              setType1={setType1}
-              setAvailable={setAvailable}
-              setAvailable1={setAvailable1}
-              setMoney={setMoney}
-              setMoney1={setMoney1}
-              setMoney2={setMoney2}
-              setMoney3={setMoney3}
-            />
-            <BookFilteredField
-              title={sendSearch}
-              tag="h1"
-              fontSize="md"
-              fontWeight={600}
-              data={filterBooks}
-              setShowModal={setShowModal}
-            />
-          </BookFilteredBox>
-        </StyledMainContainer>
+        <SearchPage
+          data={filterBooks}
+          sendSearch={sendSearch}
+          setShowModal={setShowModal}
+          setType={setType}
+          setType1={setType1}
+          setAvailable={setAvailable}
+          setAvailable1={setAvailable1}
+          setMoney={setMoney}
+          setMoney1={setMoney1}
+          setMoney2={setMoney2}
+          setMoney3={setMoney3}
+        />
       )}
+
       {isLoading && <Spinner />}
 
       <div ref={loader} style={{ maxWidth: '1136px', margin: ' 0 auto' }}>
