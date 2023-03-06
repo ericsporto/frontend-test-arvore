@@ -1,6 +1,6 @@
 import { QueryFunctionContext, useQuery } from 'react-query';
-import api from '../services/api';
-import { BooksModel } from '../types/books';
+import api from '../../../../services/api';
+import { BooksModel } from '../../../../types/books';
 
 export async function getBooksFiltered(ctx: QueryFunctionContext) {
   const [, search, indexItem] = ctx.queryKey;

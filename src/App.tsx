@@ -2,12 +2,12 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Footer from './components/footer';
 import Header from './components/header';
 import Spinner from './components/spinner';
-import useFetchBooksFiltered from './queries/getBooksFiltered';
 import { useQueryClient } from 'react-query';
 import { Item } from './types/books';
 import FilterModal from './components/mobileFilterModal';
 import Home from './pages/Home';
 import SearchPage from './pages/SearchPage';
+import useFetchBooksFiltered from './pages/SearchPage/hooks/useFetchFilteredBooks';
 
 function App() {
   const [text, setText] = useState('');

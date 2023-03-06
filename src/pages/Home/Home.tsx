@@ -1,10 +1,9 @@
 import BookField from './../../components/bookField';
-import useFetchBooks from './../../queries/getBooks';
 import { StyledMainContainer } from './../../styles/mainContainer';
 import { ColoredContainer } from './../../styles/coloredContainer';
+import useFetchBooks from './hooks/useFetchBooks';
 
-const Home:React.FC = () => {
-
+const Home: React.FC = () => {
   //Fetch Datas
   const { data: adventureBooks, isLoading: adventureLoading } =
     useFetchBooks('Aventura');
