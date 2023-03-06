@@ -151,11 +151,7 @@ const BookFilteredField: React.FC<BookFieldProps> = ({
           {data?.map((item, index) => (
             <div key={index} style={{ display: 'column' }}>
               <BookCardFiltered
-                url={
-                  item.volumeInfo?.imageLinks?.thumbnail
-                    ? item.volumeInfo?.imageLinks?.thumbnail
-                    : NoImage
-                }
+                url={item.volumeInfo?.imageLinks?.thumbnail ?? NoImage}
                 image={
                   item.saleInfo.saleability === 'NOT_FOR_SALE'
                     ? Overlay
